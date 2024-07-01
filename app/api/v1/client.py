@@ -15,11 +15,9 @@ def register():
     参数、校验、接收参数"""
     data = request.json
     form = ClientForm(data=data)
-    if form.validate():
-        promise = {ClientTypeEnum.USER_EMAIL: __resgister_user_by_email}
-        promise[form.type.data]()
-    else:
-        raise ClientTypeError()
+    form.validate_for_api()
+    promise = {ClientTypeEnum.USER_EMAIL: __resgister_user_by_email}
+    promise[form.type.data]()
 
     return "register success"
 

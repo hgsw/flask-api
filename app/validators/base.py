@@ -1,16 +1,14 @@
-from collections.abc import Sequence
-from typing import Any, Mapping
-from wtforms import Form, StringField, IntegerField, ValidationError
-
+from wtforms import Form
+from app.libs.error_code import ParameterException
 
 class BaseForm(Form):
-    def __init__(self, data):
-        super(BaseForm, self).__init__(data=data)
+    """使用是自定义的BaseForm进行参数校验"""
 
-    def validate(self):
-        pass
+    def __init__(self, data):
+        # data需要校验的参数
+        super(BaseForm, self).__init__(data=data)
 
     def validate_for_api(self):
         valid = super(BaseForm, self).validate()
         if not valid:
-            pass
+            raise ParameterException(msg=self.errors)

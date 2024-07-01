@@ -1,24 +1,26 @@
 from collections.abc import Sequence
 from typing import Any, Mapping
-from wtforms import Form, StringField, IntegerField, ValidationError
+from wtforms import StringField, IntegerField, ValidationError
 from wtforms.validators import DataRequired, Length, Email, Regexp, length
 from app.libs.enums import ClientTypeEnum
 from app.models.user import User
+from app.validators.base import BaseForm as Form
 
 
 class ClientForm(Form):
-    account = StringField(validators=[DataRequired(), Length(6, 32)])
+    # message="不允许为空" 自定义错误
+    account = StringField(validators=[DataRequired(message="不允许为空"), Length(6, 32)])
     secret = StringField()
     type = IntegerField(validators=[DataRequired()])
 
-    def validate_type(form, value):
+    def validate_type(self, value):
         try:
             # 无异常即实现了数字向枚举类型转换
             client = ClientTypeEnum(value.data)
         except:
             raise ValidationError("注册方式不正确")
-        
-        form.type.data = client
+
+        self.type.data = client
 
 
 class UserEmailForm(ClientForm):
