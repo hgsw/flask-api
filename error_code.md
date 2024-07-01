@@ -1,3 +1,5 @@
 # 业务错误码
 
-1006 客户端注册方式不正确
+1006 client is invalid
+1000 invalid parameter
+1007 HTTPException error
