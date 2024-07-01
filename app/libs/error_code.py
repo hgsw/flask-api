@@ -1,6 +1,11 @@
 from app.libs.error import APIException
 
 
+class Success(APIException):
+    code = 201
+    msg = "ok"
+    error_code = 0
+    
 class ClientTypeError(APIException):
     code = 400
     msg = "client is invalid"
