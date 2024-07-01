@@ -5,3 +5,5 @@
 1007 HTTPException error
 1001 The resource not found
 1005 Authorization failed
+1002 Token is invalid
+1003 Token is expired

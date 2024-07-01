@@ -1,12 +1,14 @@
 from flask import Blueprint
 from app.libs.redprint import Redprint
-
+from app.libs.token_auth import auth
 # user = Blueprint("user", __name__)
 api = Redprint("user")
 
 
 @api.route("/get_user")
+@auth.login_required
 def get_user():
+    # token 验证是否过期 是否合法
     return "hello get_user"
 
 
