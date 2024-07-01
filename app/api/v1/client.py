@@ -11,7 +11,6 @@ api = Redprint("client")
 
 @api.route("/register", methods=["POST"])
 def register():
-    1 / 0
     """不要将user局限成人，三方、APP、小程序、用户等，因此注册的形式非常多
     参数、校验、接收参数"""
     form = ClientForm().validate_for_api()

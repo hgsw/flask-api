@@ -1,5 +1,7 @@
 # 业务错误码
 
-1006 client is invalid
-1000 invalid parameter
+1006 Client is invalid
+1000 Invalid parameter
 1007 HTTPException error
+1001 The resource not found
+1005 Authorization failed
