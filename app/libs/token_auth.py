@@ -32,5 +32,6 @@ def verify_auth_token(token):
 
     uid = data["uid"]
     ac_type = data["type"]
+    scope = data["is_admin"]
 
-    return User(uid, ac_type, "")
+    return User(uid, ac_type, scope)

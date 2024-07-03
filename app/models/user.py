@@ -52,8 +52,8 @@ class User(Base):
         # 比对密码
         if not user.check_password(password):
             raise AuthFailed()
-
-        return {"uid": user.id}
+        is_admin = True if user.auth == 2 else False
+        return {"uid": user.id, "is_admin": is_admin}
 
     def check_password(self, raw):
         if not self._password:
