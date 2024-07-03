@@ -7,3 +7,4 @@
 1005 Authorization failed
 1002 Token is invalid
 1003 Token is expired
+999 Sorry, we made a mistake

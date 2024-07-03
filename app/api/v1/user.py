@@ -17,8 +17,6 @@ def get_user(uid):
     # r = {"nickname": user.nickname, "email": user.email}
     # return jsonify(r)
 
-    #! 测试对象序列化代码
-    # return jsonify(UserTest())
     return jsonify(user)
 
 

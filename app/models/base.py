@@ -68,6 +68,10 @@ class Base(db.Model):
             return datetime.fromtimestamp(self.create_time)
         return None
 
+    def __getitem__(self, item):
+        # 获取指定对象传递item的值
+        return getattr(self, item)
+
     def delete(self):
         """逻辑删除"""
         self.status = 0

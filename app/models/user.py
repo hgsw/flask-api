@@ -5,6 +5,8 @@ from app.models.base import Base
 from app.models.base import db
 from app.libs.error_code import NotFound, AuthFailed
 
+# import datetime # 测试导包
+
 
 class User(Base):
 
@@ -14,15 +16,13 @@ class User(Base):
     email = Column(String(50), unique=True, nullable=False)
     nickname = Column(String(24), unique=True, nullable=False)
     auth = Column(SmallInteger, default=1)
+    # data = datetime.date(2024, 5, 20) # 测试代码，序列化时，对象里面还有对象
     _password = Column("password", String(256))
 
     def keys(self):
         # 优雅的序列化指定变量
+        # return ["id", "email", "nickname", "data"] # 测试代码
         return ["id", "email", "nickname"]
-
-    def __getitem__(self, item):
-        # 获取指定对象的值
-        return getattr(self, item)
 
     @property
     def password(self):

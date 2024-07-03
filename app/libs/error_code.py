@@ -6,7 +6,11 @@ class Success(APIException):
     msg = "ok"
     error_code = 0
 
-
+class ServerError(APIException):
+    code = 500
+    msg = 'Sorry, we made a mistake'
+    error_code = 999
+    
 class ClientTypeError(APIException):
     code = 400
     msg = "Client is invalid"
