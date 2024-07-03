@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy as _SQLAlchemy, BaseQuery
 from sqlalchemy import Column, Integer, SmallInteger
 from contextlib import contextmanager
 from datetime import datetime
+from app.libs.error_code import NotFound
 
 
 class SQLAlchemy(_SQLAlchemy):
@@ -20,10 +21,25 @@ class Query(BaseQuery):
     此时还需要将自定义的类替换原有的类"""
 
     def filter_by(self, **kwargs):
+        # 父类方法重写，增加默认查询条件
         if not "status" in kwargs.keys():
             kwargs["status"] = 1
 
         return super(Query, self).filter_by(**kwargs)
+
+    def get_or_404(self, ident, description=None):
+        # 父类方法重写，抛出自定义异常
+        rv = self.get(ident)
+        if not rv:
+            raise NotFound()
+        return rv
+
+    def first_or_404(self, description=None):
+        # 父类方法重写，抛出自定义异常
+        rv = self.first()
+        if rv is None:
+            raise NotFound()
+        return rv
 
 
 db = SQLAlchemy(query_class=Query)

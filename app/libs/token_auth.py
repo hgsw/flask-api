@@ -25,10 +25,10 @@ def verify_auth_token(token):
     try:
         data = s.loads(token)
         # 异常发生就是token认证失败
-    except BadSignature:
-        raise AuthFailed(msg="Token is invalid", error_code=1002)
     except SignatureExpired:
         raise AuthFailed(msg="Token is expired", error_code=1003)
+    except BadSignature:
+        raise AuthFailed(msg="Token is invalid", error_code=1002)
 
     uid = data["uid"]
     ac_type = data["type"]

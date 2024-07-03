@@ -1,15 +1,20 @@
-from flask import Blueprint
+from flask import Blueprint, jsonify
 from app.libs.redprint import Redprint
 from app.libs.token_auth import auth
+from app.models.user import User
+
 # user = Blueprint("user", __name__)
 api = Redprint("user")
 
 
-@api.route("/get_user")
+@api.route("/<int:uid>", methods=["GET"])
 @auth.login_required
-def get_user():
+def get_user(uid):
     # token 验证是否过期 是否合法
-    return "hello get_user"
+    user = User.query.get_or_404(uid)
+    # 当然可以，但是足够优雅，
+    r = {"nickname": user.nickname, "email": user.email}
+    return jsonify(r)
 
 
 @api.route("/create")
