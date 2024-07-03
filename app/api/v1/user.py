@@ -4,25 +4,6 @@ from app.libs.token_auth import auth
 from app.models.user import User
 
 
-class UserTest:
-    """调用类的__dict__函数，类变量不会被转化为dict
-    必须是实例变量__dict__才会将变量转化dict"""
-
-    name = "hou"
-    age = 18
-
-    def __init__(self):
-        self.nickname = "user1"
-
-    def keys(self):
-        # 通过dict(self)返回对象构建字典的key
-        return ("name", "age", "nickname")
-
-    def __getitem__(self, item):
-        # 根据item获取对象的值
-        return getattr(self, item)
-
-
 # user = Blueprint("user", __name__)
 api = Redprint("user")
 
@@ -37,8 +18,8 @@ def get_user(uid):
     # return jsonify(r)
 
     #! 测试对象序列化代码
-    return jsonify(UserTest())
-    # return jsonify(user)
+    # return jsonify(UserTest())
+    return jsonify(user)
 
 
 @api.route("/create")

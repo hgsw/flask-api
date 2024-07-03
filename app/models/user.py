@@ -16,6 +16,14 @@ class User(Base):
     auth = Column(SmallInteger, default=1)
     _password = Column("password", String(256))
 
+    def keys(self):
+        # 优雅的序列化指定变量
+        return ["id", "email", "nickname"]
+
+    def __getitem__(self, item):
+        # 获取指定对象的值
+        return getattr(self, item)
+
     @property
     def password(self):
         return self._password
