@@ -1,4 +1,5 @@
-from flask import Flask
+from flask import Flask as _Flask
+from flask.json import JSONEncoder as _JSONEncoder
 
 # 将user和book两个蓝图文件注册flask的蓝图中
 # def register_blueprints(app):
@@ -7,6 +8,19 @@ from flask import Flask
 
 #     app.register_blueprint(user)
 #     app.register_blueprint(book)
+
+
+# 重写flask的JSONEncoder的default方法
+class JSONEncoder(_JSONEncoder):
+    def default(self, o):
+        # r = o.__dict__ # 只能获取实例变量组成的字典
+        r = dict(o)
+        return r
+
+
+# 重写flask对象的json_encoder的方式，采用自定义的JSONEncoder
+class Flask(_Flask):
+    json_encoder = JSONEncoder
 
 
 # 自定义Redprint对象，先分别注册到蓝图对象中再注册到flask中
