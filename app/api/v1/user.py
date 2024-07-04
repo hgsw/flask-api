@@ -24,8 +24,8 @@ def get_user():
 @api.route("/<int:uid>", methods=["GET"])
 @auth.login_required
 def super_get_user(uid):
-    is_admin = g.user.scope
-    if not is_admin:
+    scope = g.user.scope
+    if scope != "AdminScope":
         raise AuthFailed()
 
     user = User.query.filter_by(id=uid).first_or_404()

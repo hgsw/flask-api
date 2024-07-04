@@ -1,8 +1,9 @@
 from flask_httpauth import HTTPBasicAuth
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired
-from app.libs.error_code import AuthFailed
-from flask import current_app, g
+from app.libs.error_code import AuthFailed, Forbidden
+from flask import current_app, g, request
 from collections import namedtuple
+from app.libs.scope import is_in_scope
 
 auth = HTTPBasicAuth()
 User = namedtuple("User", ["uid", "ac_type", "scope"])
@@ -11,7 +12,7 @@ User = namedtuple("User", ["uid", "ac_type", "scope"])
 @auth.verify_password
 def verify_password(token, password):
     # 采用HTTPBasicAuth的方式处理账号和密码的方式，必须放在http的头部中
-    # kay=Authorization value=basic base64(账号:密码)
+    # key=Authorization value=basic base64(账号:密码)
     user_info = verify_auth_token(token)
     if not user_info:
         return False
@@ -32,6 +33,10 @@ def verify_auth_token(token):
 
     uid = data["uid"]
     ac_type = data["type"]
-    scope = data["is_admin"]
+    scope = data["scope"]
+    # 可以获得当前请求可以访问的视图函数
+    allow = is_in_scope(scope, request.endpoint)
+    if not allow:
+        raise Forbidden()
 
     return User(uid, ac_type, scope)

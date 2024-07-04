@@ -7,4 +7,8 @@
 1005 Authorization failed
 1002 Token is invalid
 1003 Token is expired
+1004 Forbidden, not in scope
 999 Sorry, we made a mistake
+
+401 授权失败，可能是账号密码错误
+403 禁止访问、权限不够
