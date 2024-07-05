@@ -52,6 +52,7 @@ class User(Base):
         # 比对密码
         if not user.check_password(password):
             raise AuthFailed()
+        # 设置权限分组，不同角色可以访问的接口已固定
         scope = "AdminScope" if user.auth == 2 else "UserScope"
 
         return {"uid": user.id, "scope": scope}
