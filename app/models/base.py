@@ -75,3 +75,19 @@ class Base(db.Model):
     def delete(self):
         """逻辑删除"""
         self.status = 0
+
+    """修改模型返回的字段，需要在模型类的构造函数中加上@orm.reconstructor
+    keys是返回的字段，hide是需要隐藏的字段，append是追加字段"""
+
+    def keys(self):
+        return self.fields
+
+    def hide(self, *keys):
+        for key in keys:
+            self.fields.remove(key)
+        return self
+
+    def append(self, *keys):
+        for key in keys:
+            self.fields.append(key)
+        return self

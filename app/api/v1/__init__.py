@@ -1,6 +1,6 @@
 from flask import Blueprint
 from app.libs.redprint import Redprint
-from app.api.v1 import user, book, client, token
+from app.api.v1 import user, book, client, token, gift
 
 
 def create_buleprint_v1():
@@ -13,5 +13,6 @@ def create_buleprint_v1():
     book.api.register(bp_v1)
     client.api.register(bp_v1)
     token.token.register(bp_v1)
+    gift.api.register(bp_v1)
 
     return bp_v1
