@@ -36,7 +36,23 @@ class UserEmailForm(ClientForm):
 
     def validate_account(self, value):
         if User.query.filter_by(email=value.data).first():
-            raise ValidationError()
+            raise ValidationError("该邮箱已注册")
+
+
+class UserIphoneForm(ClientForm):
+    account = StringField(validators=[Regexp("^1[35789]\d{9}$", message="手机号格式不正确")])
+    secret = StringField(
+        validators=[
+            DataRequired(),
+            Regexp(r"^[A-Za-z0-9_*&$#@]{6,22}$"),
+        ]
+    )
+    nickname = StringField(validators=[DataRequired(), length(min=2, max=22)])
+
+    def validate_account(self, value):
+        # User模型数据库应该有iphone字段，这里就用email代替了
+        if User.query.filter_by(email=value.data).first():
+            raise ValidationError("该手机号已注册")
 
 
 class BookSearchForm(Form):

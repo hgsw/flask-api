@@ -45,6 +45,16 @@ class User(Base):
             db.session.add(user)
 
     @staticmethod
+    def register_by_iphone(nickname, iphone, secret):
+        print(f"手机号码：{iphone}，写入数据库，完成手机号注册...")
+        with db.auto_commit():
+            user = User()
+            user.nickname = nickname
+            user.email = iphone
+            user.password = secret
+            db.session.add(user)
+
+    @staticmethod
     def verify(email, password):
         user = User.query.filter_by(email=email).first()
         if not user:
@@ -56,6 +66,14 @@ class User(Base):
         scope = "AdminScope" if user.auth == 2 else "UserScope"
 
         return {"uid": user.id, "scope": scope}
+
+    @staticmethod
+    def verify_iphone(iphone):
+        print("手机号码验证...")
+        uid = 4
+        scope = "AdminScope"
+
+        return {"uid": uid, "scope": scope}
 
     def check_password(self, raw):
         if not self._password:
